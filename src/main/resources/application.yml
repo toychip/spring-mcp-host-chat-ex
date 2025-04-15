@@ -9,6 +9,7 @@ spring:
           model: claude-3-7-sonnet-20250219
     mcp:
       client:
+        enabled: true
         toolcallback:
           enabled: true
         sse:
