@@ -1,4 +1,4 @@
-package com.example.mcphost;
+package com.example.mcphost.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;

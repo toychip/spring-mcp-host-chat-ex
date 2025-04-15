@@ -1,4 +1,4 @@
-package com.example.mcphost;
+package com.example.mcphost.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;

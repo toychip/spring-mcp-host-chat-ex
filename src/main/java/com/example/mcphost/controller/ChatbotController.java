@@ -1,5 +1,6 @@
-package com.example.mcphost;
+package com.example.mcphost.controller;
 
+import com.example.mcphost.service.ChatbotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,8 @@ public class ChatbotController {
 
     @PostMapping("/chat")
     public Mono<ResponseEntity<ChatResponse>> chat(@RequestBody ChatRequest chatRequest) {
-        System.out.println("chatRequest.question = " + chatRequest.question);
+        System.out.println("chatRequest.question = " + chatRequest.question());
         return chatbotService.chat(chatRequest.question())
                 .map(answer -> ResponseEntity.ok(new ChatResponse(answer)));
-    }
-
-
-    public record ChatRequest(String question) {
-    }
-
-    public record ChatResponse(String answer) {
     }
 }

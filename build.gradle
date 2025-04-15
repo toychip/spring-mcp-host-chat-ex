@@ -21,6 +21,12 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven {
+        name = 'Central Portal Snapshots'
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+    }
 }
 
 dependencies {
@@ -31,9 +37,23 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation 'org.springframework.ai:spring-ai-mcp-client-webflux-spring-boot-starter:1.0.0-M6'
+    // Spring AI MCP 관련 스타터는 그대로 사용하되, 내부에서 구버전 의존성이 끌려오지 않도록 exclude 처리
+    implementation('org.springframework.ai:spring-ai-mcp-client-webflux-spring-boot-starter:1.0.0-SNAPSHOT') {
+        exclude group: 'io.modelcontextprotocol.sdk', module: 'mcp-spring-webflux'
+        exclude group: 'io.modelcontextprotocol.sdk', module: 'mcp'
+    }
+    implementation 'org.springframework.ai:spring-ai-anthropic-spring-boot-starter:1.0.0-SNAPSHOT'
 
-    implementation 'org.springframework.ai:spring-ai-anthropic-spring-boot-starter:1.0.0-M6'
+    // MCP SDK 관련 의존성을 0.8.0으로 명시적으로 추가
+    implementation 'io.modelcontextprotocol.sdk:mcp:0.8.0'
+    implementation 'io.modelcontextprotocol.sdk:mcp-spring-webflux:0.8.0'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'io.modelcontextprotocol.sdk:mcp:0.8.0'
+        force 'io.modelcontextprotocol.sdk:mcp-spring-webflux:0.8.0'
+    }
 }
 
 tasks.named('test') {
