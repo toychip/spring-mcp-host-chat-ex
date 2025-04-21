@@ -18,6 +18,7 @@ public class ChatbotController {
     public Mono<ResponseEntity<ChatResponse>> chat(@RequestBody ChatRequest chatRequest) {
         System.out.println("chatRequest.question = " + chatRequest.question());
         return chatbotService.chat(chatRequest.question())
-                .map(answer -> ResponseEntity.ok(new ChatResponse(answer)));
+                .map(ChatResponse::new)
+                .map(ResponseEntity::ok);
     }
 }

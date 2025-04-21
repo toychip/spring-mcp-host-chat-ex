@@ -1,7 +1,5 @@
 spring:
   ai:
-    application:
-      name: mcp-host
     anthropic:
       api-key: ${ANTHROPIC_API_KEY}
       chat:
@@ -33,11 +31,11 @@ spring:
                 - "-y"
                 - "@modelcontextprotocol/server-filesystem"
                 - "./"
+        type: ASYNC
+        request-timeout: 60s
 
 logging:
   level:
-    io:
-      modelcontextprotocolL: TRACE
     org:
       springframework:
-        ai: TRACE
+        ai: DEBUG
